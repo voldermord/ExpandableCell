@@ -146,9 +146,14 @@ extension ExpandableTableView {
     }
 	
     public func close(at indexPath: IndexPath){
+	     
+        guard let indexPaths = closeIndexPaths(indexPath: indexPath) else { return }
+       
     	if let cell = self.cellForRow(at: indexPath) as? ExpandableCell {
                 cell.close()
         }
+	    
+	    self.deleteRows(at: expandedIndexPaths, with: animation)
     }
     
     open override func reloadData() {
