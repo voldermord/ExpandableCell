@@ -38,7 +38,9 @@ extension ExpandableTableView: UITableViewDataSource, UITableViewDelegate {
         if !expandedData.isExpandedCell {
             delegate.expandableTableView(self, didSelectRowAt: indexPath)
             if expandableProcessor.isExpandable(at: indexPath) {
-                open(indexPath: indexPath, delegate: delegate)
+		 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                    self.open(indexPath: indexPath, delegate: delegate)
+                 })
             } else {
                 close(indexPath: indexPath)
                 formerIndexPath = nil
@@ -143,17 +145,6 @@ extension ExpandableTableView {
 
     public func closeAll() {
         _ = closeAllIndexPaths()
-    }
-	
-    public func close(at indexPath: IndexPath){
-	     
-        guard let indexPaths = closeIndexPaths(indexPath: indexPath) else { return }
-       
-    	if let cell = self.cellForRow(at: indexPath) as? ExpandableCell {
-                cell.close()
-        }
-	    
-	    self.deleteRows(at: expandedIndexPaths, with: animation)
     }
     
     open override func reloadData() {
