@@ -12,6 +12,11 @@ open class ExpandableCell: UITableViewCell {
     open var arrowImageView: UIImageView!
     private var isOpen = false
 
+    override open func prepareForReuse() {
+        isOpen = false
+        self.arrowImageView.layer.transform = CATransform3DMakeRotation(CGFloat(Double.pi), 0.0, 0.0, 0.0)
+    }
+    
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
